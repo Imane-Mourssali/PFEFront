@@ -14,6 +14,10 @@ import { ComponentsComponent } from './components.component';
 import { NotificationComponent } from './notification/notification.component';
 import { NgbdModalComponent } from './modal/modal.component';
 import { NgbdModalContent } from './modal/modal.component';
+import {AccountComponent} from './account/account.component';
+import {NavbarComponent} from '../shared/navbar/navbar.component';
+import {SignupComponent} from './signup/signup.component';
+import {LoginComponent} from './login/login.component';
 
 @NgModule({
     imports: [
@@ -28,13 +32,17 @@ import { NgbdModalContent } from './modal/modal.component';
         ComponentsComponent,
         BasicelementsComponent,
         NavigationComponent,
+        NavbarComponent,
+        SignupComponent,
+        LoginComponent,
         TypographyComponent,
         NucleoiconsComponent,
         NotificationComponent,
         NgbdModalComponent,
-        NgbdModalContent
+        NgbdModalContent,
+        AccountComponent
     ],
     entryComponents: [NgbdModalContent],
-    exports:[ ComponentsComponent ]
+    exports: [ ComponentsComponent ]
 })
 export class ComponentsModule { }

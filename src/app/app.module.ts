@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
@@ -11,14 +11,16 @@ import { FooterComponent } from './shared/footer/footer.component';
 
 import { ComponentsModule } from './components/components.module';
 import { ExamplesModule } from './examples/examples.module';
-import {AuthenticationService} from './services/authentication.service';
 import {HttpClientModule} from '@angular/common/http';
-
-
+import {KeycloakAngularModule} from 'keycloak-angular';
+import {OperationsService} from './services/operations.service';
+import { AccountComponent } from './components/account/account.component';
+/*export function kcFactory(keycloakService: KeycloakService) {
+  return () => keycloakService.init();
+}*/
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
     FooterComponent
   ],
   imports: [
@@ -30,8 +32,14 @@ import {HttpClientModule} from '@angular/common/http';
     ExamplesModule,
     AppRoutingModule,
     HttpClientModule,
+    KeycloakAngularModule
   ],
-  providers: [AuthenticationService],
+  providers: [/*{
+    provide: APP_INITIALIZER,
+    useFactory: kcFactory,
+    deps: [KeycloakService],
+    multi: true
+  }*/, OperationsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
