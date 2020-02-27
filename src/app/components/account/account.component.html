@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-white">
   <div class="container">
-    <img src="assets/logosh.png" width="70" height="70" >
+    <img src="assets/img/wallet.png" width="70" height="70" >
     <button class="navbar-toggler navbar-toggler-right burger-menu" type="button" data-toggle="collapse" data-target="#navbar-primary" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-bar"></span>
       <span class="navbar-toggler-bar"></span>
@@ -8,88 +8,126 @@
     </button>
     <div class="collapse navbar-collapse" id="navbar-primary">
       <div class="left">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link text-primary" href="#">&nbsp;Récapitulatif</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-primary" href="#">&nbsp;Activité</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-primary" href="#">&nbsp;Envoyer et demander</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-primary" href="#">&nbsp;Portefeuille</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-primary" href="#">&nbsp;Offres</a>
-        </li>
-      </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link text-primary" href="#">&nbsp;Récapitulatif</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-primary" href="#">&nbsp;Activité</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-primary" href="#">&nbsp;Envoyer et demander</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-primary" href="#">&nbsp;Portefeuille</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-primary" href="#">&nbsp;Offres</a>
+          </li>
+        </ul>
       </div>
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link text-primary" href="#"><i class="nc-icon nc-settings-gear-65" aria-hidden="true"></i>&nbsp;</a>
+
+        <li class="nav-item dropdown" *ngIf="securityService.kc.authenticated">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        <span *ngIf="securityService.kc.authenticated">
+                    {{securityService.kc.tokenParsed.name}}
+                    </span>
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item nav-link" href="#"><i class="nc-icon nc-bell-55" aria-hidden="true"></i>Notification</a>
+            <a class="dropdown-item nav-link clickable" (click)="onLogout()"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Logout</a>
+            <a class="dropdown-item nav-link clickable"  (click)="onChangePassword()"><i class="nc-icon nc-settings-gear-65" aria-hidden="true"></i>Change Password</a>
+          </div>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-primary" href="#"><i class="nc-icon nc-bell-55" aria-hidden="true"></i>&nbsp;</a>
+
+        <li class="nav-item" *ngIf="!securityService.kc.authenticated">
+          <a class="nav-link" (click)="onLogin()">Login</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-primary" href="#">&nbsp;DÉCONNEXION</a>
-        </li>
+
       </ul>
     </div>
+
 
   </div>
 </nav>
 
-<div class="container pt-4">
+<div class="container pt-4" style="min-height: 75vh" *ngIf="isAdmin">
   <div class="row">
   <div class="col-md-6">
     <div class="card ">
       <div class="card-header bg-primary">Consultation d'un comptes</div>
       <div class="card-body">
-        <form #f="ngForm" (ngSubmit)="consulterCompte()">
+
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Code Compte">
+            <input type="text" class="form-control" name="code" [(ngModel)]="CodeCompte" placeholder="Code Compte">
             <div class="input-group-append">
-              <button class="btn btn-success" type="submit" >OK</button>
+              <button class="btn btn-success" (click)="ShowAccount()">OK</button>
             </div>
           </div>
-        </form>
+
       </div>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-12" *ngIf="courant">
       <div class="card ">
         <div class="card-header bg-primary">Informations sur le compte</div>
         <div class="card-body">
-          <table class="table table-hover">
-            <thead>
-            <tr>
-              <th>Firstname</th>
-              <th>Lastname</th>
-              <th>Email</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>John</td>
-              <td>Doe</td>
-              <td>john@example.com</td>
-            </tr>
-            <tr>
-              <td>Mary</td>
-              <td>Moe</td>
-              <td>mary@example.com</td>
-            </tr>
-            <tr>
-              <td>July</td>
-              <td>Dooley</td>
-              <td>july@example.com</td>
-            </tr>
-            </tbody>
-          </table>
+          <div>
+            <label>Client : </label>
+            <label>{{compteCourant.client.name}} </label>
+          </div>
+          <div>
+            <label>Type : </label>
+            <label>Compte Courant </label>
+          </div>
+             <div>
+               <label><b>Code Compte : </b> </label>
+               <label>{{compteCourant.codeCompte}}</label>
+             </div>
+          <div>
+            <label><b>Date de creation : </b></label>
+            <label>{{compteCourant.dateCreation | date:'dd-mm-yyyy'}}</label>
+          </div>
+          <div>
+            <label><b>Solde : </b></label>
+            <label>{{compteCourant.solde}}</label>
+          </div>
+          <div>
+            <label>Decouvert : </label>
+            <label>{{compteCourant.decouvert}}</label>
+          </div>
+
         </div>
     </div>
+    </div>
+    <div class="col-md-12" *ngIf="epargne">
+      <div class="card ">
+        <div class="card-header bg-primary">Informations sur le compte</div>
+        <div class="card-body">
+          <div>
+            <label>Type : </label>
+            <label>Compte Epargne </label>
+          </div>
+          <div>
+            <label><b>Code Compte : </b> </label>
+            <label>{{compteEpargne.codeCompte}}</label>
+          </div>
+          <div>
+            <label><b>Date de creation : </b></label>
+            <label>{{compteEpargne.dateCreation | date:'dd-mm-yyyy'}}</label>
+          </div>
+          <div>
+            <label><b>Solde : </b></label>
+            <label>{{compteEpargne.solde}}</label>
+          </div>
+          <div>
+            <label><b>Taux : </b></label>
+            <label>{{compteEpargne.taux}}</label>
+          </div>
+
+
+        </div>
+      </div>
     </div>
 
 </div>
@@ -98,15 +136,85 @@
   <div class="card ">
     <div class="card-header bg-primary">Opérations sur le compte</div>
     <div class="card-body">
+      <div>
+        <label><b>Code Compte : </b> </label>
+        <label>{{CodeCompte}}</label>
+      </div>
 
+      <div class="form-check-radio">
+        <label class="form-check-label">
+          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="versement" ngModel  (change)="onItemChange($event)" #virbutton>
+          Versement
+          <span class="form-check-sign"></span>
+        </label>
+      </div>
+      <div class="form-check-radio">
+        <label class="form-check-label">
+          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="retrait" ngModel (change)="onItemChange($event)" >
+          Retrait
+          <span class="form-check-sign"></span>
+        </label>
+      </div>
+      <div class="form-check-radio">
+        <label class="form-check-label">
+          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="virement" ngModel (change)="onItemChange($event)">
+          Virement
+          <span class="form-check-sign"></span>
+        </label>
+      </div>
+      <div class="col-sm-9" *ngIf="this.isButtonVisible" >
+        <div class="input-group" [ngClass]="{'input-group-focus':focus===true}">
+          <input type="text" class="form-control"  placeholder="Compte" name="codeCompte2" [(ngModel)]="codeCompte2" aria-describedby="basic-addon1" (focus)="focus=true" (blur)="focus=false" >
+          <div class="input-group-append">
+            <span class="input-group-text" id="basic-addon2"><i class="fa fa-user" aria-hidden="true"></i></span>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div class="col-sm-9">
+        <div class="input-group" [ngClass]="{'input-group-focus':focus===true}">
+          <input type="text" class="form-control" [(ngModel)]="montant" placeholder="Montant" aria-describedby="basic-addon1" (focus)="focus=true" (blur)="focus=false">
+          <div class="input-group-append">
+            <span class="input-group-text" id="basic-addon3"><i class="fa fa-money" aria-hidden="true"></i></span>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div class="col-md-8">
+        <button type="button" type="submit" (click)="Save()" class="btn btn-success btn-sm">Enregistrer</button>
+      </div>
     </div>
   </div>
-  <div class="card ">
+  <div class="card " *ngIf="code">
     <div class="card-header bg-primary">Liste des opérations</div>
-    <div class="card-body">
 
+      <table class="table">
+        <thead>
+        <tr>
+          <td>Date</td>
+          <td>Type</td>
+          <td>Montant</td>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngIf="versement">
+          <tr *ngFor="let op of operationVerser" >
+            <td>{{op.dateOperation | date:'dd-mm-yyyy hh:mm:ss'}}</td>
+            <td>Versement</td>
+            <td style="color: #3c763d">+ {{op.montant}}</td>
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="retrait">
+          <tr *ngFor="let op of operationRetrait" >
+            <td>{{op.dateOperation | date:'dd-mm-yyyy hh:mm:ss'}}</td>
+            <td>Retrait</td>
+            <td style="color: red"> - {{op.montant}}</td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
     </div>
-  </div>
+
 </div>
 </div>
 </div>

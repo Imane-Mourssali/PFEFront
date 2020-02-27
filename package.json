@@ -32,7 +32,7 @@
     "jquery": "3.2.1",
     "jw-bootstrap-switch-ng2": "2.0.1",
     "keycloak-angular": "^7.1.0",
-    "keycloak-js": "^8.0.1",
+    "keycloak-js": "^8.0.2",
     "keycloak-js-adapter": "^1.0.6",
     "ng2-nouislider": "1.7.12",
     "nouislider": "9.2.0",

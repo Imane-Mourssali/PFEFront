@@ -5,7 +5,8 @@ import 'rxjs/add/operator/filter';
 import { DOCUMENT } from '@angular/platform-browser';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { NavbarComponent } from './shared/navbar/navbar.component';
-import {OperationsService} from './services/operations.service';
+
+import {version} from "punycode";
 
 @Component({
     selector: 'app-root',
@@ -15,34 +16,29 @@ import {OperationsService} from './services/operations.service';
 export class AppComponent implements OnInit {
     private _router: Subscription;
     @ViewChild(NavbarComponent) navbar: NavbarComponent;
-    constructor( private renderer: Renderer, private operationsService: OperationsService,
+    constructor( private renderer: Renderer,
                  private router: Router, @Inject(DOCUMENT) private document: any, private element: ElementRef,
                  public location: Location) {}
     operation;
     ngOnInit() {
-        this.operationsService.getAllOperations().subscribe(data => {
-            this.operation = data;
-            console.log(this.operation)
-        }, err => {
-            console.log(err)
-        })
+
         var navbar : HTMLElement = this.element.nativeElement.children[0].children[0];
-        this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
+       /* this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
             if (window.outerWidth > 991) {
                 window.document.children[0].scrollTop = 0;
             }else{
                 window.document.activeElement.scrollTop = 0;
             }
-            this.navbar.sidebarClose();
-        });
+            //this.navbar.sidebarClose();
+        });*/
         this.renderer.listenGlobal('window', 'scroll', (event) => {
             const number = window.scrollY;
             if (number > 150 || window.pageYOffset > 150) {
                 // add logic
-                navbar.classList.remove('navbar-transparent');
+                //navbar.classList.remove('navbar-transparent');
             } else {
                 // remove logic
-                navbar.classList.add('navbar-transparent');
+              //  navbar.classList.add('navbar-transparent');
             }
         });
         var ua = window.navigator.userAgent;

@@ -1,5 +1,7 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import {KeycloakSecurityService} from "../../services/keycloak-security.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-navbar',
@@ -10,8 +12,9 @@ export class NavbarComponent implements OnInit {
     private toggleButton: any;
     private sidebarVisible: boolean;
 
-    constructor(public location: Location, private element : ElementRef) {
+    constructor(public location: Location, private element : ElementRef,public securityService:KeycloakSecurityService) {
         this.sidebarVisible = false;
+      //  console.log(this.securityService.kc.tokenParsed.)
     }
 
     ngOnInit() {
@@ -38,7 +41,7 @@ export class NavbarComponent implements OnInit {
         this.sidebarVisible = false;
         html.classList.remove('nav-open');
     };
-    sidebarToggle() {
+   /* sidebarToggle() {
         // const toggleButton = this.toggleButton;
         // const body = document.getElementsByTagName('body')[0];
         if (this.sidebarVisible === false) {
@@ -46,8 +49,8 @@ export class NavbarComponent implements OnInit {
         } else {
             this.sidebarClose();
         }
-    };
-    isHome() {
+    };*/
+   /* isHome() {
       var titlee = this.location.prepareExternalUrl(this.location.path());
       if(titlee.charAt(0) === '#'){
           titlee = titlee.slice( 1 );
@@ -58,8 +61,8 @@ export class NavbarComponent implements OnInit {
         else {
             return false;
         }
-    }
-    isDocumentation() {
+    }*/
+   /* isDocumentation() {
       var titlee = this.location.prepareExternalUrl(this.location.path());
       if(titlee.charAt(0) === '#'){
           titlee = titlee.slice( 1 );
@@ -70,5 +73,18 @@ export class NavbarComponent implements OnInit {
         else {
             return false;
         }
+    }*/
+
+    onLogout() {
+        this.securityService.kc.logout()
+
+    }
+
+    onLogin() {
+        this.securityService.kc.login();
+    }
+
+    onChangePassword() {
+        this.securityService.kc.accountManagement();
     }
 }

@@ -1,35 +1,53 @@
-<nav class="navbar navbar-expand-lg fixed-top navbar-transparent" color-on-scroll="500">
+<nav class="navbar navbar-expand-lg bg-white">
     <div class="container">
-        <div class="navbar-translate">
-            <img src="assets/logosh.png" width="90" height="90" >
-            <button class="navbar-toggler navbar-burger" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation" (click)="sidebarToggle()">
-                <span class="navbar-toggler-bar"></span>
-                <span class="navbar-toggler-bar"></span>
-                <span class="navbar-toggler-bar"></span>
-            </button>
-        </div>
-        <div class="navbar-collapse" id="navbarToggler">
+        <img src="assets/img/wallet.png" width="70" height="70" >
+        <button class="navbar-toggler navbar-toggler-right burger-menu" type="button" data-toggle="collapse" data-target="#navbar-primary" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar"></span>
+            <span class="navbar-toggler-bar"></span>
+            <span class="navbar-toggler-bar"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-primary">
+            <div class="left">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-primary" href="#">&nbsp;Récapitulatif</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-primary" href="#">&nbsp;Activité</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-primary" href="#">&nbsp;Envoyer et demander</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-primary" href="#">&nbsp;Portefeuille</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-primary" href="#">&nbsp;Offres</a>
+                    </li>
+                </ul>
+            </div>
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item" *ngIf="!isDocumentation()">
-                    <a class="nav-link" rel="tooltip"  data-placement="bottom" href="https://twitter.com/CreativeTim" target="_blank">
-                    ACHETER
+
+                <li class="nav-item dropdown" *ngIf="securityService.kc.authenticated">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        <span *ngIf="securityService.kc.authenticated">
+                    {{securityService.kc.tokenParsed.name}}
+                    </span>
                     </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item nav-link" href="#"><i class="nc-icon nc-bell-55" aria-hidden="true"></i>Notification</a>
+                        <a class="dropdown-item nav-link clickable" (click)="onLogout()"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Logout</a>
+                        <a class="dropdown-item nav-link clickable"  (click)="onChangePassword()"><i class="nc-icon nc-settings-gear-65" aria-hidden="true"></i>Change Password</a>
+                    </div>
                 </li>
-                <li class="nav-item" *ngIf="!isDocumentation()">
-                    <a class="nav-link" rel="tooltip" data-placement="bottom" href="https://www.facebook.com/CreativeTim" target="_blank">
-                        VENDRE
-                    </a>
+
+                <li class="nav-item" *ngIf="!securityService.kc.authenticated">
+                    <a class="nav-link" (click)="onLogin()">Login</a>
                 </li>
-                <li class="nav-item" *ngIf="!isDocumentation()">
-                    <a class="nav-link" rel="tooltip"  data-placement="bottom" href="https://www.instagram.com/CreativeTimOfficial" target="_blank">
-                        ENVOYER
-                    </a>
-                </li>
-                <li class="nav-item" *ngIf="!isDocumentation()">
-                    <button type="button" [routerLink]="['/login']" class="btn btn-primary btn-round">Connexion</button>
-                    <button type="button" [routerLink]="['/signup']" class="btn btn-outline-primary btn-round">Ouvrir un compte</button>
-                </li>
+
             </ul>
         </div>
+
+
     </div>
 </nav>

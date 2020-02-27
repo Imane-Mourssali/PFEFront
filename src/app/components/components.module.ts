@@ -18,6 +18,9 @@ import {AccountComponent} from './account/account.component';
 import {NavbarComponent} from '../shared/navbar/navbar.component';
 import {SignupComponent} from './signup/signup.component';
 import {LoginComponent} from './login/login.component';
+import {AccountService} from "./account/service/account.service";
+import {HttpClientModule} from "@angular/common/http";
+import {BrowserModule} from "@angular/platform-browser";
 
 @NgModule({
     imports: [
@@ -26,7 +29,9 @@ import {LoginComponent} from './login/login.component';
         NgbModule,
         NouisliderModule,
         RouterModule,
-        JwBootstrapSwitchNg2Module
+        HttpClientModule,
+        JwBootstrapSwitchNg2Module,
+        BrowserModule,
     ],
     declarations: [
         ComponentsComponent,
@@ -42,6 +47,7 @@ import {LoginComponent} from './login/login.component';
         NgbdModalContent,
         AccountComponent
     ],
+
     entryComponents: [NgbdModalContent],
     exports: [ ComponentsComponent ]
 })
